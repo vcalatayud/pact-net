@@ -9,6 +9,7 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PactNet.Matchers;
+using PactNet.Output.Xunit;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -60,7 +61,7 @@ namespace PactNet.Tests
                 DefaultJsonSettings = jsonSettings,
                 Outputters = new[]
                 {
-                    new XUnitOutput(output)
+                    new XunitOutput(output)
                 }
             };
 
