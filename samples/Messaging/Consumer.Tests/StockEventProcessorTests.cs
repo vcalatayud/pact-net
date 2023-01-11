@@ -36,7 +36,7 @@ namespace Consumer.Tests
         public void ReceiveSomeStockEvents()
         {
             this.messagePact
-                .ExpectsToReceive("some stock ticker events")
+                .ExpectsToReceive("some stock ticker events") //This is the When
                 .Given("A list of events is pushed to the queue")
                 .WithMetadata("key", "valueKey")
                 .WithJsonContent(Match.MinType(new
