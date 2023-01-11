@@ -56,8 +56,15 @@ namespace Provider.Tests
                 Formatting = Formatting.Indented
             };
 
+            /**
+            * Provider will have to say:
+            * Which is the consumer it wants to verify
+            * What to do with the provider states
+            * And what to do with the "When" the when is supposed to trigger the message so that it gets captured and can be compared
+            **/
+
             this.verifier
-                .MessagingProvider("Stock Event Producer", defaultSettings)
+                .MessagingProvider("Stock Event Producer", defaultSettings) 
                 .WithProviderMessages(scenarios =>
                  {
                      scenarios.Add("a single event",
