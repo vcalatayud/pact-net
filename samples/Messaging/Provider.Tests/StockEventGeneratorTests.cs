@@ -67,6 +67,31 @@ namespace Provider.Tests
                 .MessagingProvider("Stock Event Producer", defaultSettings) 
                 .WithProviderMessages(scenarios =>
                  {
+                    /**
+                    * We'll need to allow to define these "scenarios" in a clean way
+                    * Maybe having a "Trigger" class or "Event", "Action" that can be created and added in the configuration
+                    * With a method receiving the IMessageScenarioBuilder
+                    * And methods to match the when? 
+                    * Seems like actions should match the "When" exactly.
+                    * We could have Actions like "an invoice is created"
+                    * the action will fill the DoAction() method
+                    * that eventually will trigger the latest part of the CreateInvoice() process
+                    * (this way we ensure that the provider generates the message also in production)
+                    * but we first need to mock the real sender
+                    * we could provide a mock of the desired interface in the method?
+                    * something like: DoAction(IMessageSender sender)
+                    * but then we are forcing the production code to have a class implementing the IMessageSender
+                    * the provider will have to implement the way to capture the message and avoid sending it
+                    * for each Action
+                    * so the DoAction() expects a message in return, or a collection of messages
+                    * should we call it GenerateMessage?
+                    * or DoAction(MessageSender sender)
+                    * waiting for a call to sender.Send(message) inside the method
+                    * or the DoAction() method returning a Message object
+                    * the Message object has MetaData and Content
+                    * yes, I think this last option is more intuitive
+                    * this way you are expected to fill the method with an action that returns a message, so you'll need to generate it and capture it inside
+                    **/
                      scenarios.Add("a single event",
                                    () => new StockEvent
                                    {
