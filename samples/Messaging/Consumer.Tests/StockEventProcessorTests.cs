@@ -36,9 +36,12 @@ namespace Consumer.Tests
         public void ReceiveSomeStockEvents()
         {
             this.messagePact
-                .ExpectsToReceive("some stock ticker events") //This is the When
+                .ExpectsToReceive("some stock ticker events") //This is the When, the trigger for the message that should be generated
                 .Given("A list of events is pushed to the queue")
                 .WithMetadata("key", "valueKey")
+                /**
+                * Here we set the expectations for the received message
+                **/
                 .WithJsonContent(Match.MinType(new
                 {
                     Name = Match.Type("AAPL"),
@@ -47,6 +50,11 @@ namespace Consumer.Tests
                 }, 1))
                 .Verify<ICollection<StockEvent>>(events =>
                 {
+                    /**
+                    * And this is the RunTest part
+                    * Here we won't check the message content manually, we already defined our expectations above
+                    * but we will process the message with production classes to be sure that we are able to handle it
+                    **/
                     events.Should().BeEquivalentTo(new[]
                     {
                         new StockEvent
